@@ -21,9 +21,13 @@ public class BinaryTree {
         }
 
         if (current.getKey().compareTo(key) < 0) {
-            current.setLeft(addRecursive(current.getLeft(), key, data));
+            Node<Object> left = addRecursive(current.getLeft(), key, data);
+            current.setLeft(left);
+            left.setParent(current);
         } else {
-            current.setRight(addRecursive(current.getRight(), key, data));
+            Node<Object> right = addRecursive(current.getRight(), key, data);
+            current.setRight(right);
+            right.setParent(current);
         }
 
         return current;
@@ -56,11 +60,16 @@ public class BinaryTree {
                 : this.findNodeRecursive(current.getRight(), key);
     }
 
+    public Node<Object> getRoot() {
+        return this.root;
+    }
+
     public static class Node<T> {
 
         private final String key;
         private T data;
 
+        private Node<T> parent;
         private Node<T> left = null;
         private Node<T> right = null;
 
@@ -95,6 +104,14 @@ public class BinaryTree {
 
         public void setRight(Node<T> right) {
             this.right = right;
+        }
+
+        public Node<T> getParent() {
+            return this.parent;
+        }
+
+        public void setParent(Node<T> parent) {
+            this.parent = parent;
         }
     }
 }
